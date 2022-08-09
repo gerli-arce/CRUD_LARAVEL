@@ -17,3 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/persona', 'App\Http\Controllers\PersonaController@show');// Mostrar los Reguistros
+Route::post('/persona', 'App\Http\Controllers\PersonaController@store'); // crear un requistro
+Route::put('/persona/{id}', 'App\Http\Controllers\PersonaController@update'); // actualixar un requistro
+Route::delete('/persona/{id}', 'App\Http\Controllers\PersonaController@destroy'); // eliminar un reguistro

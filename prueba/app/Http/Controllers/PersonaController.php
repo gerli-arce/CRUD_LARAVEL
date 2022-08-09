@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\persona;
 use Illuminate\Http\Request;
 
+
 class PersonaController extends Controller
 {
     /**
@@ -14,8 +15,9 @@ class PersonaController extends Controller
      */
     public function index()
     {
-        $personas = persona::orderByDesc('id')->get();
-        return view('personas.index', compact('personas'));
+
+        return view('personas.index');
+
     }
 
     /**
@@ -36,16 +38,25 @@ class PersonaController extends Controller
      */
     public function store(Request $request)
     {
-        $datos = $request -> validate(
-            [
-            'nombres' => 'required|max:60',
-            'apellidos' => 'required|max:60',
-            'dni' => 'required|max:60',
-            'address' => 'required|max:60'
-            ]
-        );
-        $persona = persona::create( $datos );
-        return redirect()->route('persona.index');
+        $response = [];
+        try {
+            $persona = new persona();
+            $persona -> nombres = $request->nombres;
+            $persona -> apellidos = $request->apellidos;
+            $persona -> dni = $request->dni;
+            $persona -> address = $request->address;
+            $persona->save();
+
+            $response['status'] = 200;
+            $response['message'] = 'Operacion Correcta';
+            $response['data'] = [];
+        } catch (\Throwable $th) {
+            $response['status'] = 400;
+            $response['message'] = 'Fallo en la operacion '.$th->getMessage(). ' response = '.$request->descripcion ;
+            $response['data'] = [];
+        }finally{
+            return response($response, $response['status']);
+        }
     }
 
     /**
@@ -56,7 +67,19 @@ class PersonaController extends Controller
      */
     public function show(persona $persona)
     {
-        //
+        $response = [];
+        try {
+            $personas = persona::all();
+            $response['status'] = 200;
+            $response['message'] = 'Operacion Correcta';
+            $response['data'] = $personas;
+        } catch (\Throwable $th) {
+            $response['status'] = 400;
+            $response['message'] = 'Fallo en la Operacion ' . $th ->getMessage();
+            $response['data'] = [];
+        }finally{
+            return response($response, $response['status']);
+        };
     }
 
     /**
@@ -67,7 +90,7 @@ class PersonaController extends Controller
      */
     public function edit(persona $persona)
     {
-        //return view('personas.edit', compact('persona'));
+        return view('personas.edit');
     }
 
     /**
@@ -77,9 +100,27 @@ class PersonaController extends Controller
      * @param  \App\Models\persona  $persona
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, persona $persona)
+    public function update(Request $request)
     {
-        //
+        $response = [];
+        try {
+            $persona =  persona::find($request->id);
+            $persona -> nombres = $request->nombres;
+            $persona -> apellidos = $request->apellidos;
+            $persona -> dni = $request->dni;
+            $persona -> address = $request->address;
+            $persona->save();
+
+            $response['status'] = 200;
+            $response['message'] = 'Operacion Correcta';
+            $response['data'] = [];
+        } catch (\Throwable $th) {
+            $response['status'] = 400;
+            $response['message'] = 'Fallo en la operacion '.$th->getMessage(). ' response = '.$request->descripcion ;
+            $response['data'] = [];
+        }finally{
+            return response($response, $response['status']);
+        }
     }
 
     /**
@@ -88,8 +129,20 @@ class PersonaController extends Controller
      * @param  \App\Models\persona  $persona
      * @return \Illuminate\Http\Response
      */
-    public function destroy(persona $persona)
+    public function destroy(Request $requestup)
     {
-        //
+        $request = [];
+        try {
+            $persona = persona::destroy($requestup ->id);
+            $request['status'] = 200;
+            $request['message'] = 'Operacion Correcta';
+            $request['data'] = [];
+        } catch (\Throwable $th) {
+            $request['status'] = 400;
+            $request['message'] = 'Fallo en la Operacion ' . $th ->getMessage();
+            $request['data'] = [];
+        }finally{
+            return response($request, $request['status']);
+        };
     }
 }

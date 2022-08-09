@@ -20,7 +20,7 @@ Route::get('/', function () {
 });
 
 Route::get('persona/agregar', [PersonaController::class, 'create'])->name('persona.create');
-Route::post('persona/guardar', [PersonaController::class, 'store'])->name('persona.store');
-Route::get('persona/listar', [PersonaController::class, 'index'])->name('persona.index');
+Route::get('persona/listar', [PersonaController::class, 'index'])->name('persona.list');
 Route::get('persona/{persona}/editar', [PersonaController::class, 'edit'])->name('persona.edit');
+
 

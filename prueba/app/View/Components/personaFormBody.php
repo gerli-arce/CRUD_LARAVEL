@@ -6,14 +6,15 @@ use Illuminate\View\Component;
 
 class personaFormBody extends Component
 {
+    private $persona;
     /**
      * Create a new component instance.
-     *
+     * @param App\Models\persona $persona
      * @return void
      */
-    public function __construct()
+    public function __construct($persona = null)
     {
-        //
+        $this -> persona = $persona;
     }
 
     /**
@@ -23,6 +24,9 @@ class personaFormBody extends Component
      */
     public function render()
     {
-        return view('components.persona-form-body');
+        $params = [
+            'persona' => $this->persona,
+        ];
+        return view('components.persona-form-body', $params);
     }
 }

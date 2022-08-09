@@ -2,47 +2,20 @@
 @section('title', 'Listado de Personas')
 @section('contenido')
     <h3>Listado de Personas</h3>
-    <table class="table table-stripped table-hover">
+    <table class="table">
         <thead>
             <tr>
-                <th>
-                    Nombre
-                </th>
-                <th>
-                    Apellidos
-                </th>
-                <th>
-                    DNI
-                </th>
-                <th>
-                    Dirección
-                </th>
-                <th>
-                    Opciónes
-                </th>
+                <th scope="col">#</th>
+                <th scope="col">Nombres</th>
+                <th scope="col">Apellidos</th>
+                <th scope="col">DNI</th>
+                <th scope="col">Dirección</th>
+                <th scope="col">Opciones</th>
             </tr>
         </thead>
-        <tbody>
-            @foreach ($personas as $persona)
-                <tr>
-                    <td>
-                        {{ $persona->nombres }}
-                    </td>
-                    <td>
-                        {{ $persona->apellidos }}
-                    </td>
-                    <td>
-                        {{ $persona->dni }}
-                    </td>
-                    <td>
-                        {{ $persona->address }}
-                    </td>
-                    <td>
-                        <a href="{{ route('persona.edit', $persona) }}" class="btn btn-danger">EDITAR</a>
-                    </td>
-                </tr>
+        <tbody id="personas-list">
 
-            @endforeach
         </tbody>
+    </table>
     </table>
 @endsection
